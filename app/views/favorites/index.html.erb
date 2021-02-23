@@ -1,30 +1,34 @@
 <div class = "main">
   <h1 class = "page-title">ーお気に入り一覧ー</h1>
-<div class = "word-lists">
-  <% if @favorites.length != 0 %>
-    <% @favorites.each do |favorite|%>
-    <ul>
-      <li class = "lists">
-        <%= link_to wordlist_path(favorite.wordlist.id), class: "listlink" do %>
-          <p class = "ex">リストの名前：</p>
-          <div class = "list-name-content">
-            <%= favorite.wordlist.listname%>
-          </div>
-          <p  class = "ex">説明：</p>
-          <div class = "list-text-content">
-            <%= favorite.wordlist.text%>
-          </div>
+    <div class = "word-lists">
+
+      <%# お気に入りがある場合 %>
+      <% if @favorites.length != 0 %>
+        <% @favorites.each do |favorite|%>
+          <ul>
+            <li class = "lists">
+              <%= link_to wordlist_path(favorite.wordlist.id), class: "listlink" do %>
+                <p class = "ex">リストの名前：</p>
+                <div class = "list-name-content">
+                  <%= favorite.wordlist.listname%>
+                </div>
+                <p  class = "ex">説明：</p>
+                <div class = "list-text-content">
+                  <%= favorite.wordlist.text%>
+                </div>
+              <% end %>
+              <%= link_to "作成者: #{favorite.wordlist.user.nickname}", user_path(favorite.wordlist.user.id) , class: "create-list-user" %>
+            </li>
+          </ul>
         <% end %>
-          <%= link_to "作成者: #{favorite.wordlist.user.nickname}", user_path(favorite.wordlist.user.id) , class: "create-list-user" %>
-      </li>
-    </ul>
-    <% end %>
-  <% else %>
-    <p class = "no-favorite">お気に入りを登録しよう！</p>
-  <% end %>
-  </div>
-  <div class = "index-page">
-  <%= paginate @favorites%>
-  </div>
-</div>
+
+      <%# お気に入りがない場合 %>
+      <% else %>
+        <p class = "no-favorite">お気に入りを登録しよう！</p>
+      <% end %>
+      
+    </div>
+    <div class = "index-page">
+      <%= paginate @favorites%>
+    </div>
 </div>

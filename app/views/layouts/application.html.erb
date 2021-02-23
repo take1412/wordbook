@@ -15,68 +15,85 @@
     <header>
         <a class = "title" href="/">WordList</a>
         <p>自分だけの単語帳を登録しよう！</p>
+        <%# ログインユーザー表示 %>
         <% if user_signed_in?%>
-        <p class = "hello">ようこそ！ <%= link_to current_user.nickname, user_path(current_user.id), class: "hello-btn" %>さん</p>
+         <p class = "hello">ようこそ！ <%= link_to current_user.nickname, user_path(current_user.id), class: "hello-btn" %>さん</p>
         <% end %>
     </header>
+
     <nav class = "navi">
       <%= link_to image_tag("images/13315", class: "word-png"), "/"%>
-          <%= form_with(url: search_wordlists_path, local: true, method: :get, class: "search-form") do |form| %>
-          <%= form.select 'search[model]', options_for_select({ "ユーザー" => "user", "リスト" => "list" }) %>
-          <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "search-input" %>
-          <%= form.button icon('fa', 'search'), type: "submit", class: "search-btn" %>
-          <% end %>
-            <% if user_signed_in?%>
-              <ul class = "nav-btn">
-                <li>
-                  <%= link_to favorite_path, class: "header-btn" do %>
-                  <i class = "fas fa-star">
-                  <p>お気に入り</p>
-                  </i>
-                  <% end %>
-                  <%= link_to user_path(current_user.id), class: "header-btn" do %>
-                  <i class = "fas fa-user">
-                  <p>マイページ</p>
-                  </i>
-                  <% end %>
-                  <%= link_to destroy_user_session_path, method: :delete, class: "header-btn" do %>
-                  <i class = "fas fa-sign-out-alt">
-                  <p>ログアウト</p>
-                  </i>
-                  <% end %>
-                </li>
-              </ul>
-            <% else %>
-              <ul class = "nav-btn">
-                <li>
-                  <%= link_to new_user_registration_path, class: "header-btn" do %>
-                  <i class = "fas fa-user-plus">
-                  <p>新規登録</p>
-                  </i>
-                  <% end %>
-                  <%= link_to new_user_session_path, class: "header-btn" do %>
-                  <i class = "fas fa-sign-in-alt">
-                  <p>ログイン</p>
-                  </i>
-                  <% end %>
-                </li>
-              </ul>
+     
+      <%# 検索ボタン %>
+      <%= form_with(url: search_wordlists_path, local: true, method: :get, class: "search-form") do |form| %>
+        <%= form.select 'search[model]', options_for_select({ "ユーザー" => "user", "リスト" => "list" }) %>
+        <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "search-input" %>
+        <%= form.button icon('fa', 'search'), type: "submit", class: "search-btn" %>
+      <% end %>
+
+      <%# ログイン時のボタン %>
+      <% if user_signed_in?%>
+        <ul class = "nav-btn">
+          <li>
+            <%# お気に入りボタン %>
+            <%= link_to favorite_path, class: "header-btn" do %>
+              <i class = "fas fa-star">
+                <p>お気に入り</p>
+              </i>
             <% end %>
-      </nav>
+
+            <%# マイページボタン %>
+            <%= link_to user_path(current_user.id), class: "header-btn" do %>
+              <i class = "fas fa-user">
+                <p>マイページ</p>
+              </i>
+            <% end %>
+
+            <%# ログアウトボタン %>
+            <%= link_to destroy_user_session_path, method: :delete, class: "header-btn" do %>
+              <i class = "fas fa-sign-out-alt">
+                <p>ログアウト</p>
+              </i>
+            <% end %>
+          </li>
+        </ul>
+      
+      <%# 未ログイン時のボタン %>
+      <% else %>
+        <ul class = "nav-btn">
+          <li>
+            <%# 新規登録ボタン %>
+            <%= link_to new_user_registration_path, class: "header-btn" do %>
+              <i class = "fas fa-user-plus">
+                <p>新規登録</p>
+              </i>
+            <% end %>
+
+            <%# ログインボタン %>
+            <%= link_to new_user_session_path, class: "header-btn" do %>
+              <i class = "fas fa-sign-in-alt">
+                <p>ログイン</p>
+              </i>
+            <% end %>
+          </li>
+        </ul>
+      <% end %>
+    </nav>
+
     <div class = "main-content">
       <%= yield %>
     </div>
     <div class = "fotnav">
-        <%= link_to "トップページに戻る", "/" , class: "top-page"%>
+      <%= link_to "トップページに戻る", "/" , class: "top-page"%>
     </div>
     <footer class = "footer">
-        <% if user_signed_in? %>
-          <%= link_to new_wordlist_path, class: "new-list-btn" do %>
+      <% if user_signed_in? %>
+        <%= link_to new_wordlist_path, class: "new-list-btn" do %>
           <i class = "fas fa-plus">
-          <p>新規リスト作成</p>
+            <p>新規リスト作成</p>
           </i>
-          <% end %>
         <% end %>
+      <% end %>
       <p class = "footer-text">copyright ©️ WordList</p>
     </footer>
   </body>

@@ -1,16 +1,17 @@
-  <div class = "word-list-show">
-      <% if @words %>
-          <% @words.each do |word| %>
-          <div class = "word-show-memory">
+<%# 単語表示ページ %>
+<div class = "word-list-show">
+  <% if @words %>
+    <% @words.each do |word| %>
+      <div class = "word-show-memory">
         <div class = "word-memory">
-            <p class = "word-show-name" id = "word-name" ><%= word.wordname%></p>
-            <p class = "word-show-mean" id = "word-mean" ><%= word.mean%></p>
+          <p class = "word-show-name" id = "word-name" ><%= word.wordname%></p>
+          <p class = "word-show-mean" id = "word-mean" ><%= word.mean%></p>
         </div>
-          </div>
-        <% end %>
-      <% end %>
-      <div class = "show-page">
-        <%= paginate @words %>
-        <%= link_to "リストに戻る", wordlist_path(@wordlist.id), class: "back-list"%>
       </div>
+    <% end %>
+  <% end %>
+  <div class = "show-page">
+    <%= paginate @words %>
+    <%= link_to "リストに戻る", wordlist_path(@wordlist.id), class: "back-list"%>
   </div>
+</div>
