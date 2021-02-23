@@ -1,12 +1,13 @@
+<%# トップページ %>
 <div class = "main">
   <div class = "word-lists">
-  <% if Wordlist.where("release_id = 1").length != 0 %>
-<%= render "main"%>
+    <% if Wordlist.where("release_id = 1").length != 0 %>
+      <%= render "main"%>
     <% else  %>
-    <p class = "no-wordlist">リストを作成しよう！</p>
+      <p class = "no-wordlist">リストを作成しよう！</p>
     <% end %>
   </div>
   <div class = "index-page">
-  <%= paginate @wordlists%>
+    <%= paginate @wordlists%>
   </div>
 </div>

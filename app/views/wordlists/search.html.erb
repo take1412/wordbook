@@ -1,55 +1,58 @@
+
 <% if @wordlists.length != 0 %>
+<%# リスト検索 %>
   <% if @model == "list"%>
-  <div class = "main">
-    <div class = "word-lists">
-    <% if Wordlist.where("release_id = 1").length != 0 %>
-      <%= render "main" %>
-      <% else  %>
-      <p class = "no-wordlist">単語を登録しよう！</p>
-      <% end %>
+    <div class = "main">
+      <div class = "word-lists">
+        <% if Wordlist.where("release_id = 1").length != 0 %>
+          <%= render "main" %>
+        <% else  %>
+          <p class = "no-wordlist">単語を登録しよう！</p>
+        <% end %>
+      </div>
+      <div class = "index-page">
+        <%= paginate @wordlists%>
+      </div>
     </div>
-    <div class = "index-page">
-    <%= paginate @wordlists%>
-    </div>
-  </div>
 
 
-
+<%# ユーザー検索 %>
   <% else %>
   <div class = "main">
     <div class = "word-lists">
-    <% if Wordlist.where("release_id = 1").length != 0 %>
-    <% @wordlists.each do |user| %>
-      <%user.wordlists.each do |wordlist|%>
-      <% if wordlist.release_id == 1 %>
-    <ul>
-      <li class = "lists">
-        <%= link_to wordlist_path(wordlist.id), class: "listlink" do %>
-          <p class = "ex">リストの名前：</p>
-          <div class = "list-name-content">
-            <%= wordlist.listname%>
-          </div>
-          <p  class = "ex">説明：</p>
-          <div class = "list-text-content">
-            <%= simple_format (wordlist.text)%>
-          </div>
-        <% end %>
-          <%= link_to "作成者: #{wordlist.user.nickname}", user_path(wordlist.user.id) , class: "create-list-user" %>
-      </li>
-    </ul>
-      <% end %>
-      <% end %>
-      <% end %>
+      <% if Wordlist.where("release_id = 1").length != 0 %>
+        <% @wordlists.each do |user| %>
+          <%user.wordlists.each do |wordlist|%>
+            <% if wordlist.release_id == 1 %>
+              <ul>
+                <li class = "lists">
+                  <%= link_to wordlist_path(wordlist.id), class: "listlink" do %>
+                    <p class = "ex">リストの名前：</p>
+                    <div class = "list-name-content">
+                      <%= wordlist.listname%>
+                    </div>
+                    <p  class = "ex">説明：</p>
+                    <div class = "list-text-content">
+                      <%= simple_format (wordlist.text)%>
+                    </div>
+                  <% end %>
+                  <%= link_to "作成者: #{wordlist.user.nickname}", user_path(wordlist.user.id) , class: "create-list-user" %>
+                </li>
+              </ul>
+            <% end %>
+          <% end %>
+       <% end %>
       <% else  %>
-      <p class = "no-wordlist">単語を登録しよう！</p>
+        <p class = "no-wordlist">単語を登録しよう！</p>
       <% end %>
     </div>
     <div class = "index-page">
-    <%= paginate @wordlists%>
+      <%= paginate @wordlists%>
     </div>
   </div>
   <% end %>
 
+<%# 検索結果がなかった場合 %>
 <% else %>
   <p class = "no-search">検索結果に該当する物はありませんでした。</p>
 <% end %>
